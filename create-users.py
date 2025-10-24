@@ -30,20 +30,20 @@ def main():
 	if match or len(fields) != 5:
             continue
 
-        #the username line assigns username with the first item inside fields which is the username.
-	#the password line assigns password with the second item inside fields which is the password.
-	#the gecos line assigns the full name with the third and fourth item along with ",,," for the defaults of room number, work phone, and home phone.
-        #the lines relate to what is in the passwd file as each item corrolates with how a passwd file is formatted with username:password:lastname:firstname
+        #The username line assigns username with the first item inside fields which is the username.
+	#The password line assigns password with the second item inside fields which is the password.
+	#The gecos line assigns the full name with the third and fourth item along with ",,," for the defaults of room number, work phone, and home phone.
+        #The lines relate to what is in the passwd file as each item corrolates with how a passwd file is formatted with username:password:lastname:firstname
 	username = fields[0]
         password = fields[1]
         gecos = "%s %s,,," % (fields[3],fields[2])
 
-	#this line splits the groups so each group can be done individually later.
+	#This line splits the groups so each group can be done individually later.
         groups = fields[4].split(',')
 
-	#this print statement prints out to the terminal whenever a user is about to be created with the username shown back to the user.
+	#This print statement prints out to the terminal whenever a user is about to be created with the username shown back to the user.
         print("==> Creating account for %s..." % (username))
-	#this line sets the variable cmd with adduser with the parameters --disabled-password, --gecos, '%s', "%s" 
+	#This line sets the variable cmd with adduser with the parameters --disabled-password, --gecos, '%s', "%s" 
 	#with the given gecos and username but no password.
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos,username)
 
@@ -54,8 +54,7 @@ def main():
 
 	#This print statement prints out to the terminal and tells the user that it is about to set the password for a said user.
         print("==> Setting the password for %s..." % (username))
-        #REPLACE THIS COMMENT - what is this line doing?  What will the variable "cmd" contain. You'll need to lookup what these linux commands do.
-	#this line sets up the cmd variable with two different commands seperated by "|" with the "/bin/echo -ne" printing out the password twice the -ne flag 
+	#This line sets up the cmd variable with two different commands seperated by "|" with the "/bin/echo -ne" printing out the password twice the -ne flag 
 	#allows it to use "\n" which is for a new line. The second command uses "sudo passwd username"  and uses it to update the password
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
@@ -65,7 +64,7 @@ def main():
         os.system(cmd)
 
         for group in groups:
-	    #this if statement is looking for "-" because if it is found it should not be added to a group
+	    #This if statement is looking for "-" because if it is found it should not be added to a group
 	    #if group is not "-" it will be added to the group with a adduser command.
             if group != '-':
                 print("==> Assigning %s to the %s group..." % (username,group))
